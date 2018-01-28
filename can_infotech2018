@@ -1,0 +1,290 @@
+
+//
+#define motor1ENA 3 //PWM
+#define motor1ENB 4
+#define motor2ENA 5
+#define motor2ENB 6
+
+#define motor1IN1 22 //front motor
+#define motor1IN2 24
+#define motor1IN3 26
+#define motor1IN4 28
+
+#define motor2IN1 30 //rear motor
+#define motor2IN2 32
+#define motor2IN3 34 
+#define motor2IN4 36
+
+#include<SoftwareSerial.h>
+SoftwareSerial BT(11,10); // 10 rx and 11 tx
+char c;
+int sspeed;
+
+
+void setup() {
+Serial.begin(9600);
+BT.begin(9600);
+}
+
+void loop() {
+  while(BT.available())
+{
+  delay(10);
+  c=BT.read();
+  
+  Serial.println(c);
+  speedcontrol();
+  switch(c)
+  {
+    case 'F':
+      forward();
+      break;
+    case 'B':
+      backward();
+      break;
+    case 'L':
+     right();
+     break;
+    case 'R':
+     left();
+      break;
+
+  case 'G':
+      hardleft();
+      break;
+    case 'I':
+      hardright();
+      break;
+    case 'J':
+      backright();
+      break;
+   case 'H':
+      backleft();
+      break;
+    case 'S':
+      brake();
+      break;
+  }
+}
+}
+void brake()
+{
+     analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+      digitalWrite(motor1IN1,LOW);
+      digitalWrite(motor1IN2,LOW);
+      digitalWrite(motor1IN3,LOW);
+      digitalWrite(motor1IN4,LOW);
+      digitalWrite(motor2IN1,LOW);
+      digitalWrite(motor2IN2,LOW);
+      digitalWrite(motor2IN3,LOW);
+      digitalWrite(motor2IN4,LOW);
+      BT.println("/n Brake");
+
+}
+
+void backward()
+{
+   analogWrite(motor1ENA,sspeed);
+    analogWrite(motor1ENB,sspeed);
+    analogWrite(motor2ENA,sspeed);
+    analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,1);
+    digitalWrite(motor1IN2,0);
+    digitalWrite(motor1IN3,1);
+    digitalWrite(motor1IN4,0);
+    digitalWrite(motor2IN1,LOW);
+    digitalWrite(motor2IN2,HIGH);
+    digitalWrite(motor2IN3,LOW);
+    digitalWrite(motor2IN4,HIGH);
+    BT.println("/n backward");
+}
+
+
+void forward()
+{
+    analogWrite(motor1ENA,sspeed);
+    analogWrite(motor1ENB,sspeed);
+    analogWrite(motor2ENA,sspeed);
+    analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,0);
+    digitalWrite(motor1IN2,1);
+    digitalWrite(motor1IN3,0);
+    digitalWrite(motor1IN4,1);
+    digitalWrite(motor2IN1,HIGH);
+    digitalWrite(motor2IN2,LOW);
+    digitalWrite(motor2IN3,HIGH);
+    digitalWrite(motor2IN4,LOW);
+    BT.println("/n forward");
+}
+
+
+
+
+void right()//forward right
+{
+    analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+     digitalWrite(motor1IN1,HIGH);
+    digitalWrite(motor1IN2,LOW);
+    digitalWrite(motor1IN3,LOW);
+    digitalWrite(motor1IN4,HIGH);
+    digitalWrite(motor2IN1,HIGH);
+    digitalWrite(motor2IN2,LOW);
+    digitalWrite(motor2IN3,LOW);
+    digitalWrite(motor2IN4,HIGH);
+    BT.println("/n hardright");
+}
+
+
+
+
+
+void left()//forward left
+{analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,LOW);
+    digitalWrite(motor1IN2,HIGH);
+    digitalWrite(motor1IN3,HIGH);
+    digitalWrite(motor1IN4,LOW);
+    digitalWrite(motor2IN1,LOW);
+    digitalWrite(motor2IN2,HIGH);
+    digitalWrite(motor2IN3,HIGH);
+    digitalWrite(motor2IN4,LOW);
+     BT.println("/n hardleft");
+    
+}
+
+
+void hardleft()
+{     analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,LOW);
+    digitalWrite(motor1IN2,LOW);
+    digitalWrite(motor1IN3,HIGH);
+    digitalWrite(motor1IN4,LOW);
+    digitalWrite(motor2IN1,LOW);
+    digitalWrite(motor2IN2,LOW);
+    digitalWrite(motor2IN3,HIGH);
+    digitalWrite(motor2IN4,LOW);
+    BT.println("/n left");
+    }
+
+
+void hardright()
+{
+    analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,HIGH);
+    digitalWrite(motor1IN2,LOW);
+    digitalWrite(motor1IN3,LOW);
+    digitalWrite(motor1IN4,LOW);
+    digitalWrite(motor2IN1,HIGH);
+    digitalWrite(motor2IN2,LOW);
+    digitalWrite(motor2IN3,LOW);
+    digitalWrite(motor2IN4,LOW);
+    }
+
+    
+void backright()
+{
+    analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,1);
+    digitalWrite(motor1IN2,0);
+    digitalWrite(motor1IN3,LOW);
+    digitalWrite(motor1IN4,LOW);
+    digitalWrite(motor2IN1,LOW);
+    digitalWrite(motor2IN2,HIGH);
+    digitalWrite(motor2IN3,LOW);
+    digitalWrite(motor2IN4,LOW);
+    }
+
+    
+void backleft()
+{
+    analogWrite(motor1ENA,sspeed);
+      analogWrite(motor1ENB,sspeed);
+      analogWrite(motor2ENA,sspeed);
+      analogWrite(motor2ENB,sspeed);
+    digitalWrite(motor1IN1,LOW);
+    digitalWrite(motor1IN2,LOW);
+    digitalWrite(motor1IN3,LOW);
+    digitalWrite(motor1IN4,HIGH);
+    digitalWrite(motor2IN1,LOW);
+    digitalWrite(motor2IN2,LOW);
+    digitalWrite(motor2IN3,LOW);
+    digitalWrite(motor2IN4,HIGH);
+    }
+
+void speedcontrol()
+{
+  while(BT.available())
+  {
+    delay(10);
+    c=BT.read();
+    switch(c)
+    {
+      case '0':
+      sspeed=80;
+      BT.println("50");
+      break;
+      
+      case '1':
+      sspeed=80;
+      break;
+      
+      case '2':
+      sspeed=80;
+      break;
+      
+      case '3':
+      sspeed=80;
+      break;
+      
+      case '4':
+      sspeed=150;
+      break;
+      case '5':
+      sspeed=150;
+      break;
+      
+      case '6':
+      sspeed=150;
+      break;
+      
+      case '7':
+      sspeed=150;
+      break;
+      
+      case '8':
+      sspeed=225;
+      break;
+      case '9':      
+      sspeed=225;
+      break;
+      
+      case 'q':
+      sspeed=225;
+      BT.println("255");
+      break;
+      }
+  }
+}
+
+
+
+
+
